@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ronald McDonald Horror</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: black;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        #container {
+            position: relative;
+            width: 50vw;
+            height: 50vh;
+            display: none; /* Hidden until button is clicked */
+        }
+
+        #ronald-normal, #ronald-deadly {
+            position: absolute;
+            max-width: 100%;
+            max-height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #ronald-deadly {
+            display: none;
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                opacity: 1;
+            }
+            20%, 24%, 55% {
+                opacity: 0;
+            }
+        }
+
+        .flicker-effect {
+            animation: flicker 1s infinite;
+        }
+
+        /* Glitchy Button Styling */
+        #start-button {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 24px;
+            color: #fff;
+            background: black;
+            border: 2px solid red;
+            padding: 20px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            z-index: 1000;
+            animation: glitch 1.5s infinite;
+        }
+
+        #start-button:hover {
+            color: red;
+            border-color: white;
+        }
+
+        /* Glitch Effect */
+        @keyframes glitch {
+            0% {
+                transform: translate(0);
+            }
+            20% {
+                transform: translate(-2px, 2px);
+            }
+            40% {
+                transform: translate(2px, -2px);
+            }
+            60% {
+                transform: translate(-2px, 2px);
+            }
+            80% {
+                transform: translate(2px, -2px);
+            }
+            100% {
+                transform: translate(0);
+            }
+        }
+
+        /* Typewriter effect */
+        .typewriter {
+            font-family: 'Courier New', Courier, monospace;
+            color: red;
+            font-size: 20px;
+            max-width: 90vw;
+            margin: 20px auto;
+            display: none;
+            white-space: pre-wrap;
+            overflow: hidden;
+            border-right: 2px solid red;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: red; }
+        }
+
+        .typewriter-animate {
+            display: block;
+            width: 100%; /* Adjusts width of the text as it types out */
+            animation: typing 3.5s steps(50, end), blink-caret .75s step-end infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Ominous Button -->
+    <button id="start-button">Enter the Portal to Begin Darkness</button>
+
+    <!-- Images and Audio Container -->
+    <div id="container">
+        <img id="ronald-normal" src="RonaldMcDonald1.jpg" alt="Ronald McDonald">
+        <img id="ronald-deadly" src="image.png" alt="Deadly Ronald McDonald">
+    </div>
+
+    <audio id="background-music" src="IMPOSSIBLE.mp3"></audio>
+
+    <!-- Typewriter Text -->
+    <div id="typewriter" class="typewriter">
+        <p>Dark Donald has taken control of the shadows, warping minds with his dark influence.</p>
+        <p>The once vibrant political landscape has crumbled into a wasteland of corruption and deceit.</p>
+        <p>No one is safe, as the darkness seeps into every corner, manipulating those who resist.</p>
+        <p>The system is broken, but Dark Donald thrives in the chaos, feeding off fear and despair.</p>
+        <p>He whispers lies into the ears of the powerful, bending them to his twisted will.</p>
+    </div>
+
+    <script>
+        const startButton = document.getElementById('start-button');
+        const ronaldNormal = document.getElementById('ronald-normal');
+        const ronaldDeadly = document.getElementById('ronald-deadly');
+        const backgroundMusic = document.getElementById('background-music');
+        const container = document.getElementById('container');
+        const typewriter = document.getElementById('typewriter');
+
+        // Add event listener to the button
+        startButton.addEventListener('click', () => {
+            // Hide button
+            startButton.style.display = 'none';
+
+            // Show the container with images
+            container.style.display = 'block';
+
+            // Step 1: Show the first image of Ronald McDonald
+            ronaldNormal.style.opacity = 1;
+
+            // Step 2: Fade into the deadly Ronald McDonald image after a delay
+            setTimeout(() => {
+                ronaldNormal.style.opacity = 0; // Fade out the first image
+                setTimeout(() => {
+                    ronaldDeadly.style.display = 'block'; // Show the deadly image
+                    ronaldDeadly.style.opacity = 1; // Fade in the deadly image
+
+                    // Step 3: Play the song when image.png (Deadly Ronald McDonald) is fully visible
+                    backgroundMusic.play();
+                }, 1000);
+            }, 3000); // Adjust timing as necessary
+
+            // Step 4: After a delay (5 seconds), show the typewriter effect
+            setTimeout(() => {
+                typewriter.classList.add('typewriter-animate');
+            }, 8000); // 5 seconds after image.png is shown
+        });
+    </script>
+</body>
+</html>
